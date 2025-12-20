@@ -1,10 +1,13 @@
+import { Button } from '@/components/ui/button';
 import './App.css'
 
 function App() {
 
   return (
     <>
-      <div className="text-3xl font-bold underline"> Stock Analyzer App v1 </div>
+      <div className="flex min-h-svh flex-col items-center justify-center"> 
+        <Button> Click Me </Button>
+      </div>
     </>
   )
 }
