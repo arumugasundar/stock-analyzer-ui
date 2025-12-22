@@ -1,75 +1,54 @@
-# React + TypeScript + Vite
+# Time-Series Stock Analyzer (UI)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a react based frontend application responsible for uploading excel file along with paramters to perform computations on time-series data
 
-Currently, two official plugins are available:
+# Project Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Follow the instructions below to get the application up and running on your local machine.
 
-## React Compiler
+---
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## 🚀 Getting Started
 
-Note: This will impact Vite dev & build performances.
+### 1. Prerequisites
+Before starting, ensure you have **Node.js** and **npm** installed on your system. You can verify this by running the following commands in your terminal:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+node -v
+npm -v
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 2. Installation
+Clone the repository and navigate into the project directory:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+git clone https://github.com/arumugasundar/stock-analyzer-ui.git
+cd stock-analyzer-ui
+```
+Install the required dependencies:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+```
+## 3. Environment Configuration
+The application requires environment variables to function correctly.
+
+ - Create a .env file in the root directory.
+
+ - Refer to the .env.example file for the required keys.
+
+ - Add your local configuration values.
+
+## 4. Running the App
+To start the development server with hot-reloading:
+
+```bash
+npm run dev
+```
+
+## 5. Build & Verification
+To ensure your changes are production-ready and compatible with our GitHub Actions deployment pipeline, run the build command:
+
+```bash
+npm run build
 ```
