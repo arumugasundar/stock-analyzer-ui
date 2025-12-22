@@ -1,14 +1,40 @@
 # Time-Series Stock Analyzer (UI)
 
-This is a react based frontend application responsible for uploading excel file along with paramters to perform computations on time-series data
+This is a react based frontend application responsible for uploading excel file along with parameters to perform computations on time-series data
 
-# Project Setup
+## 🛠️ Technology Stack
+
+* **Frontend:** React (JavaScript)
+
+* **Styling:** TailwindCSS, Shadcn/ui
+
+* **Form Handling:** React Hook Form, Zod
+
+* **Cloud Infrastructure:** AWS (S3, CloudFront)
+
+* **CI/CD:** GitHub Actions
+
+## 🛡️ Security Measures
+
+ * **Input Validation:** Enforces strict range checks ($0$ to $100$) and restricts file uploads to `.csv`/`.xlsx` formats under 5MB.
+
+* **Error Handling:** Gracefully intercepts server exceptions and surfaces actionable feedback via UI toast notifications.
+
+## 🏗️ Deployment Architecture
+
+ * **CI/CD Pipeline:** GitHub Actions automatically triggers a production build upon every code push.
+
+* **Static Hosting:** Optimized build artifacts are deployed to an **Amazon S3** bucket for high-durability hosting.
+
+* **Edge Distribution:** **Amazon CloudFront** serves as the global CDN, ensuring low-latency delivery and secure HTTPS connections.
+
+## 🚀 Getting Started
 
 Follow the instructions below to get the application up and running on your local machine.
 
 ---
 
-## 🚀 Getting Started
+
 
 ### 1. Prerequisites
 Before starting, ensure you have **Node.js** and **npm** installed on your system. You can verify this by running the following commands in your terminal:
