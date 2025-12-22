@@ -11,11 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Field, FieldDescription, FieldSet, FieldLabel } from "@/components/ui/field"
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const ACCEPTED_FILE_TYPES = [
-  "text/csv", 
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "application/vnd.ms-excel"
-];
+const ACCEPTED_FILE_TYPES = [ "text/csv", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ];
 
 const formSchema = z.object({
   volumeLookbackDays: z
@@ -40,7 +36,7 @@ const formSchema = z.object({
     .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, "Max size is 5MB")
     .refine(
       (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
-      "Only .csv, .xls and .xlsx are supported"
+      "Only .csv and .xlsx are supported"
     ),
 });
 
@@ -85,7 +81,7 @@ export const DataInputForm: React.FC = () => {
         const a = document.createElement("a");
         a.href = url;
         const timestamp = format(new Date(), "yyyy-MM-dd 'at' HH.mm.ss");
-        a.download = `${data.inputExcelFile[0].name.split('.').slice(0, -1).join('.')}_result_${timestamp}.xlsx`; // Filename
+        a.download = `${data.inputExcelFile[0].name.split('.').slice(0, -1).join('.')}_result_${timestamp}.xlsx`;
         
         document.body.appendChild(a);
         a.click();
@@ -93,14 +89,18 @@ export const DataInputForm: React.FC = () => {
         window.URL.revokeObjectURL(url);
       } else {
         const errorData = await response.json();
-        console.error("Server Error:", errorData.detail);
-        toast("Upload Failed:", {
+        console.error("Error:", errorData.detail);
+        toast("Upload Failed", {
           description: (
-            <pre className="bg-code text-slate-700 mt-2 w-[320px] overflow-x-auto rounded-md p-4">
+            <pre className="bg-code text-slate-700 mt-2 w-[320px] h-80 overflow-auto rounded-md p-4">
               <code>{JSON.stringify(errorData.detail, null, 2)}</code>
             </pre>
           ),
-          position: "bottom-right", classNames: { content: "flex flex-col gap-2" },
+          closeButton: true,
+          position: "bottom-right", classNames: { 
+            content: "flex flex-col gap-2 relative",
+            closeButton: "!left-auto !right-2 !top-4 !bg-white !border-slate-200 !opacity-100",
+          },
           style: { "--border-radius": "calc(var(--radius)  + 4px)" } as React.CSSProperties,
         })
       }
@@ -149,8 +149,11 @@ export const DataInputForm: React.FC = () => {
             </div>
             <Field>
               <FieldLabel htmlFor="inputExcelFile"> Input Excel Files </FieldLabel>
-              <FieldDescription> One or more Excel files containing time-ordered stock data with time, price, and volume columns. </FieldDescription>
-              <Input {...register("inputExcelFile")} id="inputExcelFile" type="file" />
+              <FieldDescription> A .csv or .elsx file containing time-ordered stock data with time, Price, and Volume columns. </FieldDescription>
+              <Input 
+              {...register("inputExcelFile")} id="inputExcelFile" type="file" 
+              accept=".csv, .xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, text/csv"
+              />
               {errors.inputExcelFile &&typeof errors.inputExcelFile.message === 'string' && <div className="text-red-500">{errors.inputExcelFile.message}</div>}
             </Field>
           </FieldSet>
@@ -158,7 +161,7 @@ export const DataInputForm: React.FC = () => {
       </CardContent>
       <CardFooter className="border-t">
         <Field orientation="horizontal">
-          <Button type="button" variant="outline" onClick={() => reset()}> Reset </Button>
+          <Button disabled={isSubmitting} type="button" variant="outline" onClick={() => reset()}> Reset </Button>
           <Button disabled={isSubmitting} type="submit" form="dataInputForm">
             {isSubmitting ? "Processing..." : "Upload"}
           </Button>
